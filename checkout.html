@@ -20,6 +20,34 @@
 			<label>Name <input id="c-name" type="text" required></label>
 			<label>Email <input id="c-email" type="email" required></label>
 			<label>Address <textarea id="c-address" required></textarea></label>
+			<label>Payment Method 
+				<select id="payment-method" required>
+					<option value="">-- Select Payment Method --</option>
+					<option value="visa">Visa</option>
+					<option value="paypal">PayPal</option>
+					<option value="bank">Bank Account</option>
+				</select>
+			</label>
+
+			<div id="visa-section" class="payment-section" style="display:none;">
+				<h4>Visa Card Details</h4>
+				<label>Card Number <input id="card-number" type="text" placeholder="1234 5678 9012 3456"></label>
+				<label>Expiry (MM/YY) <input id="card-expiry" type="text" placeholder="MM/YY"></label>
+				<label>CVV <input id="card-cvv" type="text" placeholder="123"></label>
+			</div>
+
+			<div id="paypal-section" class="payment-section" style="display:none;">
+				<h4>PayPal Account</h4>
+				<label>PayPal Email <input id="paypal-email" type="email" placeholder="your@email.com"></label>
+			</div>
+
+			<div id="bank-section" class="payment-section" style="display:none;">
+				<h4>Bank Account Details</h4>
+				<label>Bank Name <input id="bank-name" type="text" placeholder="Your Bank"></label>
+				<label>Account Number <input id="account-number" type="text" placeholder="Account #"></label>
+				<label>Routing Number <input id="routing-number" type="text" placeholder="Routing #"></label>
+			</div>
+
 			<div class="form-actions">
 				<button class="btn" type="submit">Confirm Checkout</button>
 			</div>
@@ -31,15 +59,58 @@
 		document.addEventListener('DOMContentLoaded', function(){
 			initStore();
 			updateCartCount();
+
+			// Toggle payment method sections
+			const paymentMethod = document.getElementById('payment-method');
+			paymentMethod.addEventListener('change', function(){
+				document.getElementById('visa-section').style.display = this.value === 'visa' ? 'block' : 'none';
+				document.getElementById('paypal-section').style.display = this.value === 'paypal' ? 'block' : 'none';
+				document.getElementById('bank-section').style.display = this.value === 'bank' ? 'block' : 'none';
+			});
+
 			document.getElementById('checkout-form').addEventListener('submit', function(e){
 				e.preventDefault();
 				const name = document.getElementById('c-name').value.trim();
 				const email = document.getElementById('c-email').value.trim();
 				const address = document.getElementById('c-address').value.trim();
+				const method = document.getElementById('payment-method').value;
+
 				if(!name || !email || !address){
 					alert('Please fill all fields.');
 					return;
 				}
+
+				// Validate payment method
+				if(!method){
+					alert('Please select a payment method.');
+					return;
+				}
+
+				// Validate payment details based on method
+				if(method === 'visa'){
+					const cardNum = document.getElementById('card-number').value.trim();
+					const expiry = document.getElementById('card-expiry').value.trim();
+					const cvv = document.getElementById('card-cvv').value.trim();
+					if(!cardNum || !expiry || !cvv){
+						alert('Please fill all Visa card details.');
+						return;
+					}
+				} else if(method === 'paypal'){
+					const paypalEmail = document.getElementById('paypal-email').value.trim();
+					if(!paypalEmail){
+						alert('Please enter your PayPal email.');
+						return;
+					}
+				} else if(method === 'bank'){
+					const bankName = document.getElementById('bank-name').value.trim();
+					const accountNum = document.getElementById('account-number').value.trim();
+					const routingNum = document.getElementById('routing-number').value.trim();
+					if(!bankName || !accountNum || !routingNum){
+						alert('Please fill all bank account details.');
+						return;
+					}
+				}
+
 				// simple confirmation flow
 				const cart = getCart();
 				if(Object.keys(cart).length === 0){

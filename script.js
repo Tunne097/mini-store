@@ -2,10 +2,10 @@
 function initStore(){
 	if(!localStorage.getItem('products')){
 		const sample = [
-			{id: 'p1', name: 'Runner Pro', price: 59.99, stock: 100},
-			{id: 'p2', name: 'Classic Sneaker', price: 49.99, stock: 100},
-			{id: 'p3', name: 'Trail Blazer', price: 79.99, stock: 100},
-            {id: 'p4', name: 'City Walker', price: 39.99, stock: 100},
+			{id: 'p1', name: 'Runner Pro', price: 59.99, stock: 100, image: 'shoes.jpg'},
+			{id: 'p2', name: 'Classic Sneaker', price: 49.99, stock: 100, image: 'shoes.jpg'},
+			{id: 'p3', name: 'Trail Blazer', price: 79.99, stock: 100, image: 'shoes.jpg'},
+	        {id: 'p4', name: 'City Walker', price: 39.99, stock: 100, image: 'shoes.jpg'},
 		];
 		localStorage.setItem('products', JSON.stringify(sample));
 	}
@@ -46,6 +46,7 @@ function renderProducts(){
 		const card = document.createElement('article');
 		card.className = 'product';
 		card.innerHTML = `
+			${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-img">` : ''}
 			<h3>${p.name}</h3>
 			<p class="price">$${p.price.toFixed(2)}</p>
 			<p class="stock">In stock: <span class="stock-num">${p.stock}</span></p>
