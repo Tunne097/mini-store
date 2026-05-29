@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Cart - Mini Shoe Store</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header class="site-header">
+		<h1>Your Cart</h1>
+		<nav>
+			<a class="home-link" href="index.html">Home</a>
+			<a class="cart-link" href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+		</nav>
+	</header>
+
+	<main>
+		<section id="cart-items" class="cart-items"></section>
+		<div class="cart-actions">
+			<a class="btn" id="checkout-btn" href="checkout.html">Checkout</a>
+			<button class="btn" id="clear-cart">Clear Cart</button>
+		</div>
+	</main>
+
+	<script src="script.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			initStore();
+			renderCartPage();
+			updateCartCount();
+
+			document.getElementById('clear-cart').addEventListener('click', function(){
+				clearCart();
+				renderCartPage();
+				updateCartCount();
+			});
+		});
+	</script>
+</body>
+</html>
+

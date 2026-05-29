@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Checkout - Mini Shoe Store</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<header class="site-header">
+		<h1>Checkout</h1>
+		<nav>
+			<a class="home-link" href="index.html">Home</a>
+			<a class="cart-link" href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+		</nav>
+	</header>
+
+	<main>
+		<form id="checkout-form" class="checkout-form">
+			<label>Name <input id="c-name" type="text" required></label>
+			<label>Email <input id="c-email" type="email" required></label>
+			<label>Address <textarea id="c-address" required></textarea></label>
+			<div class="form-actions">
+				<button class="btn" type="submit">Confirm Checkout</button>
+			</div>
+		</form>
+	</main>
+
+	<script src="script.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			initStore();
+			updateCartCount();
+			document.getElementById('checkout-form').addEventListener('submit', function(e){
+				e.preventDefault();
+				const name = document.getElementById('c-name').value.trim();
+				const email = document.getElementById('c-email').value.trim();
+				const address = document.getElementById('c-address').value.trim();
+				if(!name || !email || !address){
+					alert('Please fill all fields.');
+					return;
+				}
+				// simple confirmation flow
+				const cart = getCart();
+				if(Object.keys(cart).length === 0){
+					alert('Your cart is empty.');
+					window.location.href = 'index.html';
+					return;
+				}
+				// Here you would send order to server. We'll just clear the cart.
+				clearCart();
+				alert('Thank you, ' + name + '! Your order has been placed.');
+				window.location.href = 'index.html';
+			});
+		});
+	</script>
+</body>
+</html>
+
