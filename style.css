@@ -18,9 +18,10 @@ button[disabled]{opacity:0.5;cursor:not-allowed}
 .cart-row{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:10px;border-radius:6px}
 .cart-info{font-size:0.95rem}
 .cart-actions{padding:16px;display:flex;gap:10px}
-.checkout-form{max-width:480px;margin:20px;padding:16px;background:#fff;border-radius:8px}
 .checkout-form label{display:block;margin-bottom:10px}
-.checkout-form input,.checkout-form textarea{width:100%;padding:8px;border:1px solid #ddd;border-radius:4px}
+.checkout-form input,.checkout-form textarea,.checkout-form select{width:100%;padding:8px;border:1px solid #ddd;border-radius:4px}
+.payment-section{margin:15px 0;padding:12px;background:#f9f9f9;border-left:3px solid #2b76f6;border-radius:4px}
+.payment-section h4{margin:0 0 10px;font-size:0.95rem;color:#222}
 .form-actions{margin-top:10px}
 
 @media (max-width:520px){
